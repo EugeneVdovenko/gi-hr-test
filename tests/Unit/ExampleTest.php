@@ -2,17 +2,35 @@
 
 namespace Tests\Unit;
 
+use App\Services\FileService;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
 {
     /**
-     * A basic test example.
-     *
-     * @return void
+     * Если файл не существует
+     * @throws Exception
      */
-    public function testBasicTest()
+    public function testFileNotFound()
     {
-        $this->assertTrue(true);
+        $this->expectException(Exception::class);
+        /** @var FileService $fs */
+        $fs = app(FileService::class);
+        $fs->setFilename("notFondFile.txt");
+        $fs->getLine()->current();
+
+    }
+
+    /**
+     * Чтение строки из файла
+     * @throws Exception
+     */
+    public function testLineReturn()
+    {
+        /** @var FileService $fs */
+        $fs = app(FileService::class);
+        $this->assertIsString($fs->getLine()->current());
+
     }
 }

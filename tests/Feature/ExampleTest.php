@@ -2,20 +2,25 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
     /**
-     * A basic test example.
+     * Проверяем, что тестовый файл (test.txt) отрабатывет удачно.
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testParseCommand()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->artisan('file:digit-stat')
+            ->assertExitCode(0);
     }
+
+    public function testParseIncorectFileCommand()
+    {
+        $this->artisan('file:digit-stat notFound.file')
+            ->assertExitCode(1);
+    }
+
 }

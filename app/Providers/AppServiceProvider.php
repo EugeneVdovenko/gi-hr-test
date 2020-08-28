@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\ParseFile;
+use App\Services\FileService;
+use App\Services\ParseService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,9 +15,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(ParseFile::class, function ($app) {
-            return new ParseFile();
+        $this->app->singleton(ParseService::class, function ($app) {
+            return new ParseService();
         });
+
+        $this->app->singleton(FileService::class, function ($app) {
+            return new FileService();
+        });
+
     }
 
     /**
