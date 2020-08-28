@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Support\Facades\Storage;
+
 class FileService
 {
     /** @var string */
@@ -22,16 +25,12 @@ class FileService
     /**
      * Пробуем открыть файл
      * @return resource
-     * @throws \Exception
+     * @throws FileNotFoundException
      */
     protected function getFile()
     {
         if (!is_resource($this->file)) {
-            if (!is_file($this->filename) || !is_readable($this->filename)) {
-                throw new \Exception(sprintf('File %s not found', $this->filename));
-            }
-
-            $this->file = fopen($this->filename, 'rb');
+            $this->file = Storage::disk('local')->readStream($this->filename);
         }
 
         return $this->file;
@@ -50,7 +49,7 @@ class FileService
     /**
      * Чтение файла построчно
      * @return bool|\Generator
-     * @throws \Exception
+     * @throws FileNotFoundException
      */
     public function getLine()
     {

@@ -3,18 +3,18 @@
 namespace Tests\Unit;
 
 use App\Services\FileService;
-use Exception;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
     /**
      * Если файл не существует
-     * @throws Exception
+     * @throws FileNotFoundException
      */
     public function testFileNotFound()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(FileNotFoundException::class);
         /** @var FileService $fs */
         $fs = app(FileService::class);
         $fs->setFilename("notFondFile.txt");
@@ -24,7 +24,7 @@ class ExampleTest extends TestCase
 
     /**
      * Чтение строки из файла
-     * @throws Exception
+     * @throws FileNotFoundException
      */
     public function testLineReturn()
     {

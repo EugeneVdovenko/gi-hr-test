@@ -28,7 +28,14 @@ composer install
 
 ## Запуск
 
-Разбор тестового файла `test.php`
+Предполагается, что файл находится в каталоге `/storage/app/`. Имя файла передается в качестве необязательного
+параметра:
+
+```
+php artisan file:digit-stat filename.txt
+```
+
+Разбор тестового файла `test.txt`
 
 ```
 php artisan file:digit-stat
